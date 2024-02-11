@@ -11,18 +11,19 @@ public class ProductClient {
 
     private final WebClient webClient;
 
-    public ProductClient(@Value("${sec01.product.service}") String baseUrl){
+    public ProductClient(@Value("${sec01.product.service}") String baseUrl) {
         this.webClient = WebClient
                 .builder()
                 .baseUrl(baseUrl)
                 .build();
     }
 
-    public Mono<ProductResponse> getProduct(Integer id){
-      return  this.webClient
+    public Mono<ProductResponse> getProduct(Integer id) {
+        return this.webClient
                 .get()
                 .uri("{id}", id)
                 .retrieve()
-                .bodyToMono(ProductResponse.class);
+                .bodyToMono(ProductResponse.class)
+                .onErrorResume(ex -> Mono.empty());
     }
 }

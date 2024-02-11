@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class ReviewClient {
                 .get()
                 .uri("{id}", id)
                 .retrieve()
-                .bodyToFlux(Review.class).collectList();
+                .bodyToFlux(Review.class).collectList()
+                .onErrorReturn(Collections.emptyList());
     }
 }
