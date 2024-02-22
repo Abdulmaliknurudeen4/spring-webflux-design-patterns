@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-@RequestMapping("sec02")
+@RequestMapping("sec03")
 public class FlightsController {
 
     @Autowired
