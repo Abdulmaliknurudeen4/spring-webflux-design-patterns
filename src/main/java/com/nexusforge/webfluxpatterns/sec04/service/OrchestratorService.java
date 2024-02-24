@@ -2,6 +2,7 @@ package com.nexusforge.webfluxpatterns.sec04.service;
 
 import com.nexusforge.webfluxpatterns.sec04.client.ProductClient;
 import com.nexusforge.webfluxpatterns.sec04.dto.*;
+import com.nexusforge.webfluxpatterns.sec04.util.DebugUtil;
 import com.nexusforge.webfluxpatterns.sec04.util.OrchestrationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,19 +11,15 @@ import reactor.core.publisher.Mono;
 @Service
 public class OrchestratorService {
     @Autowired
-    private ProductClient productClient;
-    @Autowired
     private OrderFulfillmentService fulfillmentService;
     @Autowired
     private OrderCancellationService cancellationService;
 
     public Mono<OrderResponse> placeOrder(Mono<OrderRequest> mono) {
         return mono.map(OrchestrationRequestContext::new)
-                .flatMap(this::getProduct)
-                .doOnNext(OrchestrationUtil::buildRequestContext)
                 .flatMap(fulfillmentService::placeOrder)
                 .doOnNext(this::doOrderPostProcessing)
-                //.doOnNext(DebugUtil::print) // debug
+                .doOnNext(DebugUtil::print) // debug
                 .map(this::toOrderResponse);
     }
 
@@ -34,12 +31,6 @@ public class OrchestratorService {
         // like sending notifications and bla bla bla
     }
 
-    private Mono<OrchestrationRequestContext> getProduct(OrchestrationRequestContext ctx) {
-        return this.productClient.getProduct(ctx.getOrderRequest().getProductId())
-                .map(Product::getPrice)
-                .doOnNext(ctx::setProductPrice)
-                .map(i -> ctx);
-    }
 
     private OrderResponse toOrderResponse(OrchestrationRequestContext ctx) {
         var isSuccess = Status.SUCCESS.equals(ctx.getStatus());
