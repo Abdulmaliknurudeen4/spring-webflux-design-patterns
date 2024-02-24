@@ -40,6 +40,6 @@ public class UserClient {
     }
 
     private PaymentResponse buildErrorResponse(PaymentRequest request) {
-        return PaymentResponse.create(request.getUserId(), null, request.getAmount(), Status.FAILED);
+        return PaymentResponse.create(null, request.getUserId(), null, request.getAmount(), Status.FAILED);
     }
 }

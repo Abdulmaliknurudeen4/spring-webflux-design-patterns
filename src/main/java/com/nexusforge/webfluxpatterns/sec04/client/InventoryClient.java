@@ -40,7 +40,8 @@ public class InventoryClient {
     }
 
     private InventoryResponse buildErrorResponse(InventoryRequest request) {
-        return InventoryResponse.create(request.getProductId(), request.getQuantity(), null, Status.FAILED);
+        return InventoryResponse.create(null, request.getProductId(),
+                request.getQuantity(), null, Status.FAILED);
     }
 
 
