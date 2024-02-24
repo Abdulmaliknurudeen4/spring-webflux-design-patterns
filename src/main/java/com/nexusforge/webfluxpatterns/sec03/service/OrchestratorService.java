@@ -23,7 +23,7 @@ public class OrchestratorService {
                 .doOnNext(OrchestrationUtil::buildRequestContext)
                 .flatMap(fulfillmentService::placeOrder)
                 .doOnNext(this::doOrderPostProcessing)
-                .doOnNext(DebugUtil::print) // debug
+                //.doOnNext(DebugUtil::print) // debug
                 .map(this::toOrderResponse);
     }
 
@@ -39,7 +39,7 @@ public class OrchestratorService {
         return this.productClient.getProduct(ctx.getOrderRequest().getProductId())
                 .map(Product::getPrice)
                 .doOnNext(ctx::setProductPrice)
-                .thenReturn(ctx);
+                .map(i -> ctx);
     }
 
     private OrderResponse toOrderResponse(OrchestrationRequestContext ctx) {

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class OrderFulfillmentService {
@@ -25,8 +23,8 @@ public class OrderFulfillmentService {
     }
 
     private void updateStatus(OrchestrationRequestContext ctx) {
-        var allSucces = this.orchestrators.stream().allMatch(o -> o.isSuccess().test(ctx));
-        var status = allSucces ? Status.SUCCESS : Status.FAILED;
+        var allSuccess = this.orchestrators.stream().allMatch(o -> o.isSuccess().test(ctx));
+        var status = allSuccess ? Status.SUCCESS : Status.FAILED;
         ctx.setStatus(status);
     }
 }

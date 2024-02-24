@@ -14,4 +14,14 @@ public class DebugUtil {
             throw new RuntimeException(e);
         }
     }
+
+    public static void printObject(Object ctx) {
+        ObjectMapper mapper = new ObjectMapper();
+        String s = null;
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ctx));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

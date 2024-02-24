@@ -1,14 +1,13 @@
 package com.nexusforge.webfluxpatterns.sec03.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "create")
+@Getter
+@Setter
 public class PaymentResponse {
     private Integer userId;
     private String name;
