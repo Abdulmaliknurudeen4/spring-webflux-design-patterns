@@ -18,7 +18,9 @@ public class InventoryOrchestrator extends Orchestrator {
     @Override
     public Mono<OrchestrationRequestContext> create(OrchestrationRequestContext ctx) {
         return this.client.deduct(ctx.getInventoryRequest())
-                .doOnNext(ctx::setInventoryResponse).thenReturn(ctx);
+                .doOnNext(ctx::setInventoryResponse)
+                .thenReturn(ctx)
+                .handle(this.statusHandler());
     }
 
     @Override
