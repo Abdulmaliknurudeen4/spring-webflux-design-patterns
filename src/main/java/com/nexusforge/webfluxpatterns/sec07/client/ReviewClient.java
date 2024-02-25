@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -30,7 +31,8 @@ public class ReviewClient {
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.empty())
                 .bodyToFlux(Review.class).collectList()
-                .retry(5).timeout(Duration.ofMillis(300))
+                .retryWhen(Retry.fixedDelay(5, Duration.ofMillis(500)))
+                .timeout(Duration.ofMillis(300))
                 .onErrorReturn(Collections.emptyList());
     }
 }

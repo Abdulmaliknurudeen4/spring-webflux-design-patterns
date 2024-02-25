@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
@@ -28,7 +29,8 @@ public class ProductClient {
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.empty())
                 .bodyToMono(Product.class)
-                .retry(5).timeout(Duration.ofMillis(300))
+                .retryWhen(Retry.fixedDelay(5, Duration.ofMillis(500)))
+                .timeout(Duration.ofMillis(300))
                 .onErrorResume(ex -> Mono.empty());
     }
 }
