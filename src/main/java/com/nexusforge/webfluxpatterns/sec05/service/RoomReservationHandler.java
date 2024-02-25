@@ -1,8 +1,10 @@
 package com.nexusforge.webfluxpatterns.sec05.service;
 
-import com.nexusforge.webfluxpatterns.sec05.client.CarClient;
 import com.nexusforge.webfluxpatterns.sec05.client.RoomClient;
-import com.nexusforge.webfluxpatterns.sec05.dto.*;
+import com.nexusforge.webfluxpatterns.sec05.dto.ReservationItemRequest;
+import com.nexusforge.webfluxpatterns.sec05.dto.ReservationItemResponse;
+import com.nexusforge.webfluxpatterns.sec05.dto.ReservationType;
+import com.nexusforge.webfluxpatterns.sec05.dto.RoomReservationResponse;
 import com.nexusforge.webfluxpatterns.sec05.utils.ReservationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class RoomReservationHandler extends ReservationHandler {
 
     @Override
     protected ReservationType getType() {
-        return ReservationType.CAR;
+        return ReservationType.ROOM;
     }
 
     @Override
