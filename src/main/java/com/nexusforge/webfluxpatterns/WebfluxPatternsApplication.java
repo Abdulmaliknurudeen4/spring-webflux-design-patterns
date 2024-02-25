@@ -3,7 +3,7 @@ package com.nexusforge.webfluxpatterns;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.nexusforge.webfluxpatterns.sec07")
+@SpringBootApplication(scanBasePackages = "com.nexusforge.webfluxpatterns.sec08")
 public class WebfluxPatternsApplication {
 
     public static void main(String[] args) {
