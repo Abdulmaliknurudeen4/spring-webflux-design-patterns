@@ -4,7 +4,7 @@ resilience4j.circuitbreaker:
       slidingWindowType: COUNT_BASED
       slidingWindowSize: 4
       minimumNumberOfCalls: 2 #min calls on startup before error rate calc
-      failureRateThreshold: 50 #in percentage
+      failureRateThreshold: 50 #in percentage, Environment ${} variables allowed.
       waitDurationInOpenState: 10s #wait duration
       permittedNumberOfCallsInHalfOpenState: 2
       recordExceptions:
